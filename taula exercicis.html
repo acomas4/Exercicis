@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutina de Fuerza - Cheatsheet Visual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .cheatsheet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.8s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+            color: white;
+        }
+        
+        .card-title {
+            flex: 1;
+        }
+        
+        .card-title h2 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+        
+        .card-title .time {
+            color: #666;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .exercise-grid {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .exercise-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .exercise-item:hover {
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+            border-left-color: #667eea;
+            transform: translateX(5px);
+        }
+        
+        .exercise-number {
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 0.9em;
+        }
+        
+        .exercise-info {
+            flex: 1;
+        }
+        
+        .exercise-name {
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 3px;
+        }
+        
+        .exercise-details {
+            font-size: 0.85em;
+            color: #636e72;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .exercise-details span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .weight-icon::before {
+            content: "🏋️";
+        }
+        
+        .reps-icon::before {
+            content: "🔄";
+        }
+        
+        .sets-info {
+            background: #667eea;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .warmup-section {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .warmup-title {
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .warmup-list {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .warmup-item {
+            background: rgba(255,255,255,0.7);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            color: #2d3436;
+        }
+        
+        .summary-card {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            grid-column: span 2;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .summary-item {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .summary-item:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.05);
+        }
+        
+        .summary-item .emoji {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+        
+        .summary-item .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .summary-item .value {
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+        
+        .tips-section {
+            background: linear-gradient(135deg, #55efc4, #00b894);
+            color: white;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        
+        .tips-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .tip-item {
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95em;
+            backdrop-filter: blur(10px);
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cheatsheet-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-card {
+                grid-column: span 1;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 10px;
+            }
+            
+            .card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+                margin-bottom: 15px;
+            }
+            
+            .card:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💪 RUTINA DE FUERZA EN CASA</h1>
+            <div class="subtitle">Entrenamiento Completo - Referencia Visual Rápida</div>
+        </div>
+        
+        <div class="cheatsheet-grid">
+            <!-- CALENTAMIENTO -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🔥</div>
+                    <div class="card-title">
+                        <h2>CALENTAMIENTO GENERAL</h2>
+                        <div class="time">⏱️ 5-7 minutos</div>
+                    </div>
+                </div>
+                
+                <div class="warmup-section">
+                    <div class="warmup-title">🔄 Movilidad Articular (2 min)</div>
+                    <div class="warmup-list">
+                        <div class="warmup-item">• Rotaciones de cuello (5 cada lado)</div>
+                        <div class="warmup-item">• Círculos con hombros (10 adelante/10 atrás)</div>
+                        <div class="warmup-item">• Rotaciones de muñecas (10 cada sentido)</div>
+                        <div class="warmup-item">• Giros de cintura (10 cada lado)</div>
+                        <div class="warmup-item">• Círculos de cadera (10 cada sentido)</div>
+                    </div>
+                </div>
+                
+                <div class="warmup-section" style="background: linear-gradient(135deg, #fab1a0, #ff7675);">
+                    <div class="warmup-title">❤️ Activación Cardiovascular (3 min)</div>
+                    <div class="warmup-list">
+                        <div class="warmup-item">• 1 min comba suave o marcha en sitio</div>
+                        <div class="warmup-item">• 10 jumping jacks</div>
+                        <div class="warmup-item">• 10 sentadillas sin peso</div>
+                        <div class="warmup-item">• 5 flexiones en rodillas</div>
+                        <div class="warmup-item">• 30 seg comba ritmo medio</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BLOQUE 1 - PECHO Y TRÍCEPS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">💎</div>
+                    <div class="card-title">
+                        <h2>BLOQUE 1: PECHO Y TRÍCEPS</h2>
+                        <div class="time">⏱️ 12-15 minutos</div>
+                    </div>
+                </div>
+                
+                <div class="warmup-section" style="background: linear-gradient(135deg, #a8e6cf, #7fdbff); margin-bottom: 15px;">
+                    <div class="warmup-title">🎯 Calentamiento Específico</div>
+                    <div class="warmup-list">
+                        <div class="warmup-item">• 10 flexiones en pared/inclinadas</div>
+                        <a href="https://youtu.be/kKJSea79QJc" target="_blank" class="warmup-item">• Rotaciones de brazos (10 pequeñas, 10 grandes)</a>
+                        <div class="warmup-item">• 5 flexiones normales lentas</div>
+                    </div>
+                </div>
+                
+                <div class="exercise-grid">
+                    <div  class="exercise-item">
+						<div class="exercise-number">1</div>
+                        <div class="exercise-info">
+                            <a href="https://youtu.be/jWnGhz1f5D4" target="_blank" class="exercise-name">Press de pecho con mancuernas</a>
+                            <div class="exercise-details">
+                                <span class="weight-icon"> 7-10kg/mancuerna</span>
+                                <span class="reps-icon"> 12-15 reps</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-number">2</div>
+                        <div class="exercise-info">
+                            <a href="https://youtu.be/NO3fnbQr5nk" target="_blank" class="exercise-name">Flexiones diamante</a>
+                            <div class="exercise-details">
+                                <span class="weight-icon"> Peso corporal</span>
+                                <span class="reps-icon"> 10-12 reps</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-number">3</div>
+                        <div class="exercise-info">
+                            <a href="https://youtu.be/Rn6LgSEPsDc" target="_blank" class="exercise-name">Press francés</a>
+                            <div class="exercise-details">
+                                <span class="weight-icon"> 6-8kg (1 mancuerna)</span>
+                                <span class="reps-icon"> 12-15 reps</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sets-info">
+                    📊 3-4 series • ⏸️ 45-60 seg descanso • 2 min antes del siguiente bloque
+                </div>
+            </div>
+            
+            <!-- BLOQUE 2 - ESPALDA Y BÍCEPS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-title">
+                        <h2>BLOQUE 2: ESPALDA Y BÍCEPS</h2>
+                        <div class="time">⏱️ 12-15 minutos</div>
+                    </div>
+                </div>
+                
+                <div class="warmup-section" style="background: linear-gradient(135deg, #ffd89b, #19547b); margin-bottom: 15px;">
+                    <div class="warmup-title" style="color: white;">🎯 Calentamiento Específico</div>
+                    <div class="warmup-list">
+                        <div class="warmup-item">• Band pulls imaginarios (15 reps)</div>
+                        <div class="warmup-item">• Remo sin peso inclinado (10 reps)</div>
+                        <div class="warmup-item">• Curl de bíceps sin peso (10 cada brazo)</div>
+                    </div>
+                </div>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-item">
+                        <div class="exercise-number">1</div>
+                        <div class="exercise-info">
+                            <a href="https://youtu.be/QdlygCkqMkM" target="_blank" class="exercise-name">Remo con mancuerna</a>
+                            <div class="exercise-details">
+                                <span class="weight-icon"> 8-10kg/mancuerna</span>
+                                <span class="reps-icon"> 12-15 reps/brazo</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-number">2</div>
+                        <div class="exercise-info">
+                            <a href="https://youtu.be/wG7xgzNIjHI" target="_blank" class="exercise-name">Curl de bíceps alterno</a>
+                            <div class="exercise-details">
+                                <span class="weight-icon"> 6-7kg/mancuerna</span>
+                                <span class="reps-icon"> 10-12 reps/brazo</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-number">3</div>
+                        <div class="exercise-info">
+                            <a href="https://youtu.be/5N1nwVOUBdg?t=64" target="_blank" class="exercise-name">Pájaros (deltoides posterior)</a>
+                            <div class="exercise-details">
+                                <span class="weight-icon"> 3-4kg/mancuerna</span>
+                                <span class="reps-icon"> 15 reps</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sets-info">
+                    📊 3-4 series • ⏸️ 45-60 seg descanso • 2 min antes del siguiente bloque
+                </div>
+            </div>
+            
+            <!-- BLOQUE 3 - CORE -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🔥</div>
+                    <div class="card-title">
+                        <h2>BLOQUE 3: CORE/ABDOMINALES</h2>
+                        <div class="time">⏱️ 10-12 minutos</div>
+                    </div>
+                </div>
+                
+                <div class="warmup-section" style="background: linear-gradient(135deg, #f093fb, #f5576c); margin-bottom: 15px;">
+                    <div class="warmup-title" style="color: white;">🎯 Calentamiento Específico</div>
+                    <div class="warmup-list">
+                        <div class="warmup-item">• Cat-cow (gato-vaca) 10 reps</div>
+                        <div class="warmup-item">• Dead bug lento 5 por lado</div>
+                        <div class="warmup-item">• Plancha en rodillas 20 seg</div>
+                    </div>
+                </div>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-item">
+                        <div class="exercise-number">1</div>
+                        <div class="exercise-info">
+                            <a href="https://youtu.be/ogfuXWgXVsg?t=2" target="_blank"  class="exercise-name">Plancha</a>
+                            <div class="exercise-details">
+                                <span class="weight-icon"> Peso corporal</span>
+                                <span class="reps-icon"> 45-60 segundos</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-number">2</div>
+                        <div class="exercise-info">
+                            <a href="https://youtu.be/Pcv0uABr7X4" target="_blank"  class="exercise-name">Crunch con mancuerna</a>
+                            <div class="exercise-details">
+                                <span class="weight-icon"> 5-7kg (en pecho)</span>
+                                <span class="reps-icon"> 15-20 reps</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-number">3</div>
+                        <div class="exercise-info">
+                            <a href="https://youtu.be/bRivOELQVOs?t=1" target="_blank" class="exercise-name">Plancha lateral</a>
+                            <div class="exercise-details">
+                                <span class="weight-icon"> Peso corporal</span>
+                                <span class="reps-icon"> 30 seg/lado</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-number">4</div>
+                        <div class="exercise-info">
+                            <a href="https://youtu.be/4oYU_1HjbtM?t=5" target="_blank" class="exercise-name">Elevación de piernas</a>
+                            <div class="exercise-details">
+                                <span class="weight-icon"> Sin peso</span>
+                                <span class="reps-icon"> 12-15 reps</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sets-info">
+                    📊 3-4 series • ⏸️ 30-45 seg descanso
+                </div>
+            </div>
+            
+            <!-- ENFRIAMIENTO -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🧘</div>
+                    <div class="card-title">
+                        <h2>ENFRIAMIENTO</h2>
+                        <div class="time">⏱️ 5-8 minutos</div>
+                    </div>
+                </div>
+                
+                <div class="warmup-section" style="background: linear-gradient(135deg, #c7ecee, #95afc0);">
+                    <div class="warmup-title">🤸 Estiramientos Estáticos (20-30 seg c/u)</div>
+                    <div class="warmup-list">
+                        <div class="warmup-item"><strong>Pecho:</strong> Brazo contra pared, girar el cuerpo</div>
+                        <div class="warmup-item"><strong>Tríceps:</strong> Brazo sobre la cabeza, codo flexionado</div>
+                        <div class="warmup-item"><strong>Espalda:</strong> Abrazo propio, redondear espalda</div>
+                        <div class="warmup-item"><strong>Bíceps:</strong> Brazo extendido atrás, palma arriba</div>
+                        <div class="warmup-item"><strong>Core:</strong> Cobra (tumbado boca abajo, elevar torso)</div>
+                        <div class="warmup-item"><strong>Laterales:</strong> De pie, inclinar a cada lado</div>
+                    </div>
+                </div>
+                
+                <div class="warmup-section" style="background: linear-gradient(135deg, #dfe6e9, #b2bec3); margin-top: 15px;">
+                    <div class="warmup-title">🫁 Respiración Profunda (2 min)</div>
+                    <div class="warmup-list">
+                        <div class="warmup-item" style="text-align: center; font-weight: 600;">
+                            4 seg inhalación → 4 seg retención → 4 seg exhalación
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RESUMEN -->
+            <div class="card summary-card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: rgba(255,255,255,0.2);">📊</div>
+                    <div class="card-title">
+                        <h2 style="color: white;">RESUMEN DE ENTRENAMIENTO</h2>
+                    </div>
+                </div>
+                
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="emoji">⏱️</div>
+                        <div class="label">Duración Total</div>
+                        <div class="value">45-55 min</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div class="emoji">🔥</div>
+                        <div class="label">Calentamiento</div>
+                        <div class="value">5-7 min</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div class="emoji">💪</div>
+                        <div class="label">Trabajo</div>
+                        <div class="value">35-40 min</div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div class="emoji">🧘</div>
+                        <div class="label">Enfriamiento</div>
+                        <div class="value">5-8 min</div>
+                    </div>
+                </div>
+                
+                <div class="tips-section">
+                    <div class="tips-title">
+                        💡 CONSEJOS CLAVE
+                    </div>
+                    <div class="tips-grid">
+                        <div class="tip-item">
+                            💧 Agua entre bloques
+                        </div>
+                        <div class="tip-item">
+                            📝 Lleva un diario
+                        </div>
+                        <div class="tip-item">
+                            🎯 Técnica perfecta
+                        </div>
+                        <div class="tip-item">
+                            🔄 Si duele, sustituye
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
